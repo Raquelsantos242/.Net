@@ -1,0 +1,30 @@
+using System.Linq.Expressions;
+
+public class Program 
+{
+    public static async Task Main(string[]args)
+    {
+        string baseUrl = "https://brasilapi.com.br/api/ddd/v1/";
+        Console.WriteLine("Digite o ddd a ser consultado:");
+
+        string ddd = Console.ReadLine();
+
+        using (HttpClient cliente = new HttpClient()) 
+        {
+            try
+            {
+                // cliente.BaseAddress = new Uri(baseUrl+ddd);
+              HttpResponseMessage response = await cliente.GetAsync(baseUrl + ddd);
+                //cliente.GetAsync(baseUrl + ddd);
+                string requestBody = response.Content.ReadAsStringAsync().Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"erro {ex.Message}");
+            
+            }
+        }
+    }
+
+}
+
