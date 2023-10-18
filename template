@@ -1,0 +1,11 @@
+dotnet --version
+dotnet --list-sdks
+dotnet --list-runtimes
+
+dotnet new webapi -n NomeDoProjeto
+dotnet new mvc -n NomeDoProjeto
+dotnet new webapp -n NomeDoProjeto
+
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+
+dotnet run
