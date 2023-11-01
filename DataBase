@@ -1,0 +1,73 @@
+create table Aluno
+(
+AlunoId INT primary key identity(1,1),
+Nome Varchar(200) NOT NULL,
+DataNascimento Date,
+Email Varchar(200)
+
+);
+
+create table Professor
+(
+ProfessorId INT primary key identity(1,1),
+Nome Varchar(200) NOT NULL,
+DataContratacao Date,
+Email Varchar(200)
+);
+
+create table Disciplina
+(
+DisciplinaId INT primary key identity(1,1),
+Nome Varchar(200) NOT NULL,
+Horas INT,
+ProfessorId INT,
+foreign key(ProfessorId) references Professor(ProfessorId)
+);
+
+create table Curso
+(
+CursoId INT primary key identity(1,1),
+Nome Varchar(200) NOT NULL,
+DataInicio Date,
+DataFim Date,
+DisciplinaId INT,
+AlunoId INT,
+foreign key (DisciplinaId) references Disciplina(DisciplinaId),
+foreign key (AlunoId) references Aluno(AlunoId)
+);
+
+delete from Curso;
+delete from Aluno;
+delete from Disciplina;
+delete from Professor;
+
+-- Massa de Dados
+
+-- Alunos
+INSERT INTO Aluno (Nome, DataNascimento, Email) VALUES ('João Silva', '2000-01-15', 'joao.silva@email.com');
+INSERT INTO Aluno (Nome, DataNascimento, Email) VALUES ('Maria Fernandes', '1999-06-10', 'maria.fernandes@email.com');
+INSERT INTO Aluno (Nome, DataNascimento, Email) VALUES ('Carlos Pereira', '2001-02-22', 'carlos.pereira@email.com');
+
+-- Professores
+INSERT INTO Professor (Nome, DataContratacao, Email) VALUES ('Dr. Antônio Castro', '2015-01-01', 'antonio.castro@email.com');
+INSERT INTO Professor (Nome, DataContratacao, Email) VALUES ('Dra. Regina Faria', '2018-05-05', 'regina.faria@email.com');
+
+-- Disciplinas (considerando 50 horas para cada disciplina)
+INSERT INTO Disciplina (Nome, Horas, ProfessorID) VALUES ('Matemática', 50, 2);
+INSERT INTO Disciplina (Nome, Horas, ProfessorID) VALUES ('História', 50, 3);
+
+-- Cursos
+INSERT INTO Curso (Nome, DataInicio, DataFim, AlunoID, DisciplinaID) VALUES ('Curso de Verão', '2023-01-15', '2023-02-15', 1, 3);
+INSERT INTO Curso (Nome, DataInicio, DataFim, AlunoID, DisciplinaID) VALUES ('Curso de Inverno', '2023-06-05', '2023-07-05', 2, 5);
+
+
+ 
+
+ /*join*/ 
+select p.Nome "nome Professor", d.Nome "nome Disciplina" from Disciplina d join Professor p on d.ProfessorId = p.ProfessorId;
+
+
+SELECT SUM(D.Horas) as TotalHoras
+FROM Disciplina D
+JOIN Curso C on D.DisciplinaId = C.DisciplinaId
+WHERE C.Nome = 'curso de verão';
